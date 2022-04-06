@@ -1337,11 +1337,20 @@ void warlock_t::create_apl_destruction()
   cds->add_action( "use_item,name=shadowed_orb_of_torment,if=cooldown.summon_infernal.remains<3|time_to_die<42" );
   cds->add_action( "summon_infernal" );
   cds->add_action( "dark_soul_instability,if=pet.infernal.active|cooldown.summon_infernal.remains_expected>time_to_die" );
-  cds->add_action( "potion,if=pet.infernal.active" );
-  cds->add_action( "berserking,if=pet.infernal.active" );
-  cds->add_action( "blood_fury,if=pet.infernal.active" );
-  cds->add_action( "fireblood,if=pet.infernal.active" );
-  cds->add_action( "use_items,if=pet.infernal.active|time_to_die<21" );
+  cds->add_action( "potion,if=pet.infernal.remains<25|(soulbind.refined_palate&cooldown.summon_inferal.remains_expected<23)" );
+  cds->add_action( "berserking,if=pet.infernal.remains<12" );
+  cds->add_action( "blood_fury,if=pet.infernal.remains<15" );
+  cds->add_action( "fireblood,if=pet.infernal.remains<8" );
+  cds->add_action( "use_item,name=soulletting_ruby,target_if=min:target.health.pct,if=cooldown.summon_infernal.remains_expected+10<(target.distance%5)+14.5|pet.infernal.remains<(target.distance%5)+14.5+20" );
+  cds->add_action( "use_item,name=sunblood_amethyst,if=cooldown.summon_infernal.remains_expected+15<(target.distance%5)|pet.infernal.remains<(target.distance%5)+15" );
+  cds->add_action( "use_item,name=empyreal_ordnance,if=cooldown.summon_infernal.remains_expected+15<(target.distance%5)+14.5|pet.infernal.remains<(target.distance%5)+14.5+15" );
+  cds->add_action( "use_item,name=scars_of_fraternal_strife,if=!buff.scars_of_fraternal_strife_4.up" );
+  cds->add_action( "use_item,name=scars_of_fraternal_strife,if=buff.scars_of_fraternal_strife_4.up&pet.infernal.remains<30" );
+  cds->add_action( "use_item,name=grim_eclipse,if=pet.infernal.remains<17" );
+  cds->add_action( "use_item,name=overflowing_anima_cage,if=pet.infernal.remains<15" );
+  cds->add_action( "use_item,slot=trinket1,if=trinket.1.has_use_buff&pet.infernal.remains<20|time_to_die<21" );
+  cds->add_action( "use_item,slot=trinket2,if=trinket.2.has_use_buff&pet.infernal.remains<20|time_to_die<21" );
+  cds->add_action( "use_items,if=!pet.infernal.active|time_to_die<21" );
 
   havoc->add_action( "conflagrate,if=buff.backdraft.down&soul_shard>=1&soul_shard<=4" );
   havoc->add_action( "soul_fire,if=cast_time<havoc_remains" );
