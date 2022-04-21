@@ -1276,7 +1276,8 @@ void warlock_t::create_apl_demonology()
   def->add_action( "variable,name=buff_sync_cd,op=set,value=12,if=!variable.use_bolt_timings&variable.in_opener&!pet.dreadstalker.active" );
   def->add_action( "variable,name=buff_sync_cd,op=set,value=0,if=!variable.use_bolt_timings&variable.in_opener&pet.dreadstalker.active&buff.wild_imps.stack>0&!talent.vilefiend.enabled" );
   def->add_action( "variable,name=buff_sync_cd,op=set,value=0,if=!variable.use_bolt_timings&variable.in_opener&pet.dreadstalker.active&prev_gcd.1.hand_of_guldan&talent.vilefiend.enabled" );
-  def->add_action( "variable,name=buff_sync_cd,op=set,value=cooldown.decimating_bolt.remains_expected,if=variable.use_bolt_timings" );
+  def->add_action( "variable,name=buff_sync_cd,op=set,value=cooldown.decimating_bolt.remains_expected,if=variable.use_bolt_timings&!variable.in_opener" );
+  def->add_action( "variable,name=buff_sync_cd,op=set,value=20,if=variable.use_bolt_timings&variable.in_opener" );
   def->add_action( "call_action_list,name=trinkets" );
   def->add_action( "call_action_list,name=ogcd,if=(!variable.use_bolt_timings&pet.demonic_tyrant.active)|(variable.use_bolt_timings&buff.shard_of_annihilation.up&(!talent.power_siphon.enabled|buff.power_siphon.up))" );
   def->add_action( "implosion,if=time_to_die<2*gcd" );
@@ -1354,7 +1355,7 @@ void warlock_t::create_apl_demonology()
   trinks->add_action( "use_item,name=scars_of_fraternal_strife,if=buff.scars_of_fraternal_strife_4.up&pet.demonic_tyrant.active" );
   trinks->add_action( "use_item,name=shadowed_orb_of_torment,if=variable.buff_sync_cd<22" );
   trinks->add_action( "use_item,name=moonlit_prism,if=variable.use_bolt_timings&pet.demonic_tyrant.active" );
-  trinks->add_action( "use_item,name=grim_eclipse,if=variable.buff_sync_cd<7" );
+  trinks->add_action( "use_item,name=grim_eclipse,if=variable.buff_sync_cd<7|(variable.in_opener&variable.use_bolt_timings)" );
   trinks->add_action( "call_action_list,name=hp_trinks,if=talent.demonic_consumption.enabled&variable.next_tyrant_cd<20" );
   trinks->add_action( "call_action_list,name=5y_per_sec_trinkets", "Effects that travel slowly from the target require additional, separate handling" );
   trinks->add_action( "use_item,name=overflowing_anima_cage,if=variable.use_buff_trinkets" );
